@@ -11,6 +11,7 @@
             [roll.modules.alb]
             [roll.modules.service-security]
             [roll.modules.kms]
+            [roll.modules.vpc]
             [roll.modules.bastion]
             [cljs.pprint :as pprint]
             [roll.utils :refer [->json]]
@@ -277,6 +278,7 @@
 (defn- config->tf [{:keys [aws-profile aws-region] :as config}]
   (meta-merge {:provider {"aws" {:profile aws-profile
                                  :region aws-region}}}
+              (roll.modules.vpc/generate config)
               (roll.modules.route-53/generate config)
               (roll.modules.alb/generate config)
               (roll.modules.asg/generate config)
