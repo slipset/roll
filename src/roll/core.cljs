@@ -168,7 +168,7 @@
                                    ["--profile" aws-profile])))))))
 
 (defn- resolve-vpc [{:keys [vpc-id]:as config}]
-  (when-not vpc-id
+  (when (= vpc-id ::default)
     (assoc config :vpc-id (aws-cmd config
                                    "ec2" "describe-vpcs"
                                    "--query" "\"Vpcs[]|[0]|VpcId\"" "--filters" "Name=isDefault,Values=true"))))
